@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "banner": {
+      "type": "banner-gift-guide"
+    },
+    "grid": {
+      "type": "grid-gift-guide"
+    }
+  },
+  "order": ["banner", "grid"]
+}
