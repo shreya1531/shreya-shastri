@@ -1,0 +1,84 @@
+{% schema %}
+{
+  "name": "Gift Guide Grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Tissot vision in the wild"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Select Product"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Gift Guide Grid",
+      "blocks": [
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<section class="gift-grid">
+  <h2 class="gift-grid__heading">{{ section.settings.heading }}</h2>
+  <div class="gift-grid__items">
+    {% for block in section.blocks %}
+      {% assign product = all_products[block.settings.product] %}
+      {% if product %}
+        <div class="gift-grid__card" data-product-handle="{{ product.handle }}">
+          <img src="{{ product.featured_image | img_url: '400x' }}" alt="{{ product.title }}">
+          <p>{{ product.title }}</p>
+          <p>{{ product.price | money }}</p>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</section>
+
+<style>
+.gift-grid {
+  padding: 60px 20px;
+  text-align: center;
+}
+.gift-grid__heading {
+  font-size: 28px;
+  margin-bottom: 40px;
+}
+.gift-grid__items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+  gap: 20px;
+}
+.gift-grid__card {
+  background: #fff;
+  border: 1px solid #eee;
+  padding: 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: box-shadow 0.3s;
+}
+.gift-grid__card:hover {
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+.gift-grid__card img {
+  max-width: 100%;
+  margin-bottom: 10px;
+}
+</style>
